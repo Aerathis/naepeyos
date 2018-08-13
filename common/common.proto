@@ -1,13 +1,29 @@
+/* Author: Jeff Philipp <jeffrey.philipp@gmail.com> 
+ */
 syntax = "proto3";
 
-service Test {
-  rpc BasicTest(TestRequest) returns (TestResponse) {}
+service Runner {
+  rpc RegisterRunner(RunnerDescription) returns (RegisterResponse) {}
+  rpc DeregisterRunner(RunnerId) returns (DeregisterResponse) {}
 }
 
-message TestRequest {
-  string other = 1;
+message RunnerId {
+  bytes runnerId = 1;
 }
 
-message TestResponse {
-  string thing = 1;
+message RunnerDescription {
+  bytes queueType = 1;
+  string queueConnectionString = 2;
+  string jobName = 3;  
+}
+
+message RegisterResponse {
+  bool success = 1;
+  bytes runnerId = 2;
+  string internalName = 3;
+}
+
+message DeregisterResponse {
+  bool success = 1;
+  string message = 2;
 }
